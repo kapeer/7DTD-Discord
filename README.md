@@ -124,3 +124,25 @@ Once you complete all of this, you will be able to run the bot by executing run.
 `Connected to game. Connected to 1 Discord Servers.`
 
 To set the channel for your server's chat, open Discord and type `7d!setchannel #yourchannel` in your server. If the setchannel command doesn't work, try [setting it manually](https://github.com/LakeYS/Dishorde/wiki/Setting-up-the-channel-manually). Once complete, the bot should be all set!
+
+# How to Install - Docker
+Follow the original instructions on how to [create](#creating-the-bot-account-1) and [configure](#configuring-the-bot) the bot with [Discord and 7DTD server's details](config.json#L6-L10), then simply mount the file in container.
+
+Create container with:
+```
+docker run -d \
+  -v <PATH_TO_CONFIG_FILE>:/bot/Dishorde/config.json \
+  --restart unless-stopped \
+  kap33r/dishorde
+```
+Use it in compose/swarm:
+```
+version: "3"
+
+services:
+  discord-7dtd:
+    image: kap33r/dishorde
+    volumes:
+      - <PATH_TO_CONFIG_FILE>:/bot/Dishorde/config.json
+    restart: unless-stopped
+```
